@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Container } from "./components/layout/Container";
 import { FeedbackList } from "./components/feedback/FeedbackList";
-import { HashtagList } from "./components/HashtagList";
+import { HashtagList } from "./components/hashtag/HashtagList";
 import { Header } from "./components/layout/Header";
 import { API_URL } from "./lib/constans";
 import { TFeedbackItem } from "./lib/types";
@@ -10,6 +10,17 @@ function App() {
   const [feedbackItems, setFeedbackItems] = useState<TFeedbackItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedCompany, setSelectedCompany] = useState("");
+
+  const filteredFeedbackItems = selectedCompany
+    ? feedbackItems.filter(
+        (feedbackItem) => feedbackItem.company === selectedCompany
+      )
+    : feedbackItems;
+
+  const companyList = feedbackItems
+    .map((item) => item.company)
+    .filter((company, index, arr) => arr.indexOf(company) === index);
 
   const handleAddToList = async (text: string) => {
     const companyName = text
@@ -36,6 +47,10 @@ function App() {
         "Content-Type": "application/json",
       },
     });
+  };
+
+  const handleSelectedCompany = (company: string) => {
+    setSelectedCompany(company);
   };
 
   const fetchData = useCallback(async () => {
@@ -66,12 +81,15 @@ function App() {
       <Container>
         <Header onAddToList={handleAddToList} />
         <FeedbackList
-          feedbackItems={feedbackItems}
+          feedbackItems={filteredFeedbackItems}
           isLoading={isLoading}
           errorMessage={errorMessage}
         />
       </Container>
-      <HashtagList />
+      <HashtagList
+        companyList={companyList}
+        handleSelectedCompany={handleSelectedCompany}
+      />
     </div>
   );
 }
