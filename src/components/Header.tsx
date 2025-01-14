@@ -3,13 +3,17 @@ import { Logo } from "./Logo";
 import { PageHeader } from "./PageHeader";
 import { Pattern } from "./Pattern";
 
-export const Header = () => {
+type HeaderProps = {
+  onAddToList: (text: string) => void;
+};
+
+export const Header = ({ onAddToList }: HeaderProps) => {
   return (
     <header>
       <Pattern />
       <Logo />
       <PageHeader />
-      <FeedbackForm />
+      <FeedbackForm onAddToList={onAddToList} />
     </header>
   );
 };

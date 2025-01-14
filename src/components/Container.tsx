@@ -1,11 +1,5 @@
-import { FeedbackList } from "./FeedbackList";
-import { Header } from "./Header";
+import { ReactNode } from "react";
 
-export const Container = () => {
-  return (
-    <main className="container">
-      <Header />
-      <FeedbackList />
-    </main>
-  );
+export const Container = ({ children }: { children: ReactNode }) => {
+  return <main className="container">{children}</main>;
 };

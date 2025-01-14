@@ -1,37 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
-import { FeedbackItem } from "./FeedbackItem";
-import { API_URL } from "../lib/constans";
 import { Spinner } from "./Spinner";
 import { ErrorMessage } from "./ErrorMessage";
+import { FeedbackItem } from "./FeedbackItem";
+import { TFeedbackItem } from "../lib/types";
 
-export const FeedbackList = () => {
-  const [feedbackItems, setFeedbackItems] = useState<FeedbackItem[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+type FeedbackItemProps = {
+  feedbackItems: TFeedbackItem[];
+  isLoading: boolean;
+  errorMessage: string;
+};
 
-  const fetchData = useCallback(async () => {
-    setIsLoading(true);
-
-    try {
-      const result = await fetch(`${API_URL}/feedbacks`);
-      if (!result.ok) {
-        throw new Error();
-      }
-
-      const { feedbacks } = await result.json();
-      setFeedbackItems(feedbacks);
-      setIsLoading(false);
-    } catch (error) {
-      setErrorMessage("Something went wrong.");
-    }
-
-    setIsLoading(false);
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
+export const FeedbackList = ({
+  feedbackItems,
+  isLoading,
+  errorMessage,
+}: FeedbackItemProps) => {
   return (
     <ul className="feedback-list">
       {isLoading ? <Spinner /> : null}
