@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import { Container } from "./components/Container";
-import { FeedbackList } from "./components/FeedbackList";
+import { Container } from "./components/layout/Container";
+import { FeedbackList } from "./components/feedback/FeedbackList";
 import { HashtagList } from "./components/HashtagList";
-import { Header } from "./components/Header";
+import { Header } from "./components/layout/Header";
 import { API_URL } from "./lib/constans";
 import { TFeedbackItem } from "./lib/types";
 

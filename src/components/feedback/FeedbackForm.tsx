@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { MAX_CHARACTERS } from "../lib/constans";
+import { MAX_CHARACTERS } from "../../lib/constans";
 
 type FeedbackFormProps = {
   onAddToList: (text: string) => void;
