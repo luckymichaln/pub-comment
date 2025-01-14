@@ -12,6 +12,7 @@ export const FeedbackItem = ({ feedbackItem }: FeedbackItemProps) => {
 
   const handleUpvote = (ev: MouseEvent<HTMLButtonElement, MouseEvent>) => {
     setUpvoteCount((prev) => ++prev);
+    ev.currentTarget.disabled = true;
     ev.stopPropagation();
   };
 
