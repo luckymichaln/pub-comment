@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Container } from "./components/layout/Container";
 import { FeedbackList } from "./components/feedback/FeedbackList";
 import { HashtagList } from "./components/hashtag/HashtagList";
@@ -12,15 +12,23 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedCompany, setSelectedCompany] = useState("");
 
-  const filteredFeedbackItems = selectedCompany
-    ? feedbackItems.filter(
-        (feedbackItem) => feedbackItem.company === selectedCompany
-      )
-    : feedbackItems;
+  const filteredFeedbackItems = useMemo(
+    () =>
+      selectedCompany
+        ? feedbackItems.filter(
+            (feedbackItem) => feedbackItem.company === selectedCompany
+          )
+        : feedbackItems,
+    [feedbackItems, selectedCompany]
+  );
 
-  const companyList = feedbackItems
-    .map((item) => item.company)
-    .filter((company, index, arr) => arr.indexOf(company) === index);
+  const companyList = useMemo(
+    () =>
+      feedbackItems
+        .map((item) => item.company)
+        .filter((company, index, arr) => arr.indexOf(company) === index),
+    [feedbackItems]
+  );
 
   const handleAddToList = async (text: string) => {
     const companyName = text
